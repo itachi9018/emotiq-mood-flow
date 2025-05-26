@@ -48,7 +48,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // In a real app, this would call an auth API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (email && password) {
+      // Check for default admin user
+      if (email === "admin" && password === "admin") {
+        const adminUser: User = {
+          id: "admin-1",
+          name: "Admin User",
+          email: "admin@emotiq.com",
+        };
+        
+        localStorage.setItem("emotiq-user", JSON.stringify(adminUser));
+        setUser(adminUser);
+        toast.success("Welcome back, Admin!");
+        navigate("/emotiq/dashboard");
+      } else if (email && password) {
         const mockUser: User = {
           id: "user-1",
           name: "Demo User",
