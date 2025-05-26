@@ -10,7 +10,9 @@ const SignIn = () => {
   const { login, isLoading } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("SignIn: Form submit triggered");
     e.preventDefault();
+    console.log("SignIn: Calling login with", { email, password });
     await login(email, password);
   };
 
@@ -57,6 +59,7 @@ const SignIn = () => {
               type="submit"
               className="emotiq-btn-primary w-full mt-6"
               disabled={isLoading}
+              onClick={() => console.log("SignIn: Button clicked")}
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </button>
