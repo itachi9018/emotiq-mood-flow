@@ -1,4 +1,3 @@
-
 import { createContext, ReactNode, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -34,22 +33,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Check for existing session on load
   useEffect(() => {
+    console.log("AuthProvider: Checking for existing session");
     const storedUser = localStorage.getItem("emotiq-user");
     if (storedUser) {
+      console.log("AuthProvider: Found stored user", storedUser);
       setUser(JSON.parse(storedUser));
     }
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
+    console.log("AuthProvider: Login attempt", { email, password });
     setIsLoading(true);
     try {
       // This is a mock authentication
       // In a real app, this would call an auth API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
+      console.log("AuthProvider: Checking credentials", { email, password });
+      
       // Check for default admin user
       if (email === "admin" && password === "admin") {
+        console.log("AuthProvider: Admin login successful");
         const adminUser: User = {
           id: "admin-1",
           name: "Admin User",
@@ -59,8 +64,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("emotiq-user", JSON.stringify(adminUser));
         setUser(adminUser);
         toast.success("Welcome back, Admin!");
+        console.log("AuthProvider: Navigating to dashboard");
         navigate("/emotiq/dashboard");
       } else if (email && password) {
+        console.log("AuthProvider: Regular user login successful");
         const mockUser: User = {
           id: "user-1",
           name: "Demo User",
@@ -70,13 +77,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("emotiq-user", JSON.stringify(mockUser));
         setUser(mockUser);
         toast.success("Welcome back!");
+        console.log("AuthProvider: Navigating to dashboard");
         navigate("/emotiq/dashboard");
       } else {
+        console.log("AuthProvider: Invalid credentials provided");
         toast.error("Invalid credentials");
       }
     } catch (error) {
+      console.error("AuthProvider: Login error", error);
       toast.error("Failed to log in");
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
