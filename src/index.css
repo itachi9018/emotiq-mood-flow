@@ -81,9 +81,31 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Accessibility improvements */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-emotiq-lavender;
+  }
+
+  /* High contrast focus for better visibility */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-emotiq-lavender ring-offset-2 ring-offset-background;
+  }
+
+  /* Ensure sufficient contrast for reduced motion users */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-/* Custom component styles */
+/* Custom component styles with improved accessibility */
 @layer components {
   .emotiq-layout {
     @apply max-w-md mx-auto min-h-screen flex flex-col bg-background px-4 pt-4 pb-16;
@@ -93,19 +115,55 @@
     @apply rounded-xl bg-white shadow-sm p-4 border border-emotiq-lavender/30;
   }
   
+  /* Improved button styles with better contrast and larger tap targets */
   .emotiq-btn-primary {
-    @apply bg-emotiq-lavender text-emotiq-text-dark rounded-full px-6 py-3 font-medium hover:bg-emotiq-lavender/90 transition-colors;
+    @apply bg-emotiq-lavender text-emotiq-text-dark rounded-full px-6 py-4 font-medium hover:bg-emotiq-lavender/90 focus:bg-emotiq-lavender/90 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center;
   }
   
   .emotiq-btn-secondary {
-    @apply bg-emotiq-mint text-emotiq-text-dark rounded-full px-6 py-3 font-medium hover:bg-emotiq-mint/90 transition-colors;
+    @apply bg-emotiq-mint text-emotiq-text-dark rounded-full px-6 py-4 font-medium hover:bg-emotiq-mint/90 focus:bg-emotiq-mint/90 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center;
   }
 
   .emotiq-btn-accent {
-    @apply bg-emotiq-sky text-emotiq-text-dark rounded-full px-6 py-3 font-medium hover:bg-emotiq-sky/90 transition-colors;
+    @apply bg-emotiq-sky text-emotiq-text-dark rounded-full px-6 py-4 font-medium hover:bg-emotiq-sky/90 focus:bg-emotiq-sky/90 transition-colors min-h-[48px] min-w-[48px] flex items-center justify-center;
+  }
+
+  /* Filter buttons with improved accessibility */
+  .emotiq-filter-btn {
+    @apply whitespace-nowrap px-4 py-3 rounded-full text-sm font-medium transition-all min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  .emotiq-filter-btn-active {
+    @apply bg-emotiq-lavender text-emotiq-text-dark shadow-sm;
+  }
+
+  .emotiq-filter-btn-inactive {
+    @apply bg-gray-100 text-emotiq-text-dark/70 hover:bg-gray-200 focus:bg-gray-200;
   }
   
   .emotiq-input {
-    @apply bg-white border border-emotiq-lavender/50 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-emotiq-lavender;
+    @apply bg-white border border-emotiq-lavender/50 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-emotiq-lavender min-h-[48px];
+  }
+
+  /* Calendar accessibility improvements */
+  .emotiq-calendar-day {
+    @apply aspect-square rounded-lg border-2 transition-all min-h-[44px] min-w-[44px] flex flex-col items-center justify-center p-1 cursor-pointer;
+  }
+
+  .emotiq-calendar-day:hover {
+    @apply border-emotiq-lavender/70 scale-105;
+  }
+
+  .emotiq-calendar-day:focus {
+    @apply border-emotiq-lavender scale-105;
+  }
+
+  .emotiq-calendar-day-selected {
+    @apply border-emotiq-lavender scale-110 shadow-md;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
   }
 }
