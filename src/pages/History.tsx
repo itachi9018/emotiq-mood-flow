@@ -32,13 +32,13 @@ const History = () => {
       const today = new Date();
       
       if (dateRange === "week") {
-        const lastWeek = new Date();
+        const lastWeek = new Date(today);
         lastWeek.setDate(today.getDate() - 7);
         return entryDate >= lastWeek;
       }
       
       if (dateRange === "month") {
-        const lastMonth = new Date();
+        const lastMonth = new Date(today);
         lastMonth.setMonth(today.getMonth() - 1);
         return entryDate >= lastMonth;
       }
@@ -256,7 +256,7 @@ const History = () => {
                     onClick={() => setSelectedDate(day.date)}
                   >
                     <div className="text-xs font-medium">
-                      {format(day.date, 'd')}
+                      {day.date.getDate()}
                     </div>
                     {day.mood > 0 && (
                       <div className="text-xs">

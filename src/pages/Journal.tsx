@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import ComingSoon from "@/components/common/ComingSoon";
 import { useMood } from "@/contexts/MoodContext";
 import { toast } from "sonner";
 
@@ -18,6 +20,11 @@ const contextOptions = [
   "Travel", "Finances", "Conflict", "Relationship", "Routine"
 ];
 
+const triggerOptions = [
+  "Sleep", "Food", "Exercise", "Social Interaction", "Weather",
+  "Deadlines", "Money", "Health", "Relationships", "Technology"
+];
+
 const Journal = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -31,6 +38,7 @@ const Journal = () => {
   const [selectedContexts, setSelectedContexts] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sentiment, setSentiment] = useState<string | null>(null);
+  const [showSuggestedActions, setShowSuggestedActions] = useState(false);
   
   // Simple sentiment analysis based on words and length
   useEffect(() => {
@@ -84,7 +92,14 @@ const Journal = () => {
         emotions: selectedEmotions,
         context: selectedContexts,
       });
-      navigate("/emotiq-mood-flow/dashboard");
+      
+      // Show suggested actions after successful submission
+      setShowSuggestedActions(true);
+      
+      // Navigate to dashboard after a delay
+      setTimeout(() => {
+        navigate("/emotiq-mood-flow/dashboard");
+      }, 3000);
     } catch (error) {
       console.error("Failed to save journal entry:", error);
     } finally {
@@ -170,6 +185,38 @@ const Journal = () => {
             ))}
           </div>
         </div>
+
+        {/* Triggers Tagging Field - Coming Soon */}
+        <div className="emotiq-card bg-gray-50 opacity-60">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-medium text-gray-500">Mood triggers</h2>
+            <span className="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded-full">Coming Soon</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {triggerOptions.map(trigger => (
+              <button
+                key={trigger}
+                disabled
+                className="px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-400 cursor-not-allowed"
+              >
+                {trigger}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-gray-500 mt-3">
+            Identify patterns in what affects your mood
+          </p>
+        </div>
+
+        {/* Suggested Actions Box - Shows after submission */}
+        {showSuggestedActions && (
+          <ComingSoon
+            title="Suggested Actions"
+            description="AI-powered recommendations to help improve your mood based on your entry"
+            icon={<span className="text-2xl">💡</span>}
+            className="bg-gradient-to-br from-emotiq-mint/20 to-emotiq-sky/20 border-emotiq-mint"
+          />
+        )}
         
         <div className="flex gap-3">
           <button 

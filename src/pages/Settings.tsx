@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import Layout from "@/components/layout/Layout";
+import ComingSoon from "@/components/common/ComingSoon";
 import { toast } from "sonner";
 import { Moon, Sun } from "lucide-react";
 
@@ -136,6 +137,40 @@ const Settings = () => {
               />
               <div className="w-11 h-6 bg-gray-200 peer-checked:bg-emotiq-lavender rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
             </label>
+          </div>
+        </div>
+
+        {/* Integrations Section - Coming Soon */}
+        <div className="emotiq-card bg-gray-50 opacity-75">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-medium text-gray-600">Integrations</h2>
+            <span className="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded-full">Coming Soon</span>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium text-gray-600">Apple Health</p>
+                <p className="text-sm text-gray-500">
+                  Sync mood data with Health app
+                </p>
+              </div>
+              <div className="w-11 h-6 bg-gray-200 rounded-full relative opacity-50">
+                <div className="absolute top-[2px] left-[2px] bg-white rounded-full h-5 w-5"></div>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium text-gray-600">Google Calendar</p>
+                <p className="text-sm text-gray-500">
+                  Set mood tracking reminders
+                </p>
+              </div>
+              <div className="w-11 h-6 bg-gray-200 rounded-full relative opacity-50">
+                <div className="absolute top-[2px] left-[2px] bg-white rounded-full h-5 w-5"></div>
+              </div>
+            </div>
           </div>
         </div>
         
