@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(adminUser);
         toast.success("Welcome back, Admin!");
         console.log("AuthProvider: Navigating to dashboard");
-        navigate("/emotiq/dashboard");
+        navigate("/emotiq-mood-flow/dashboard");
       } else if (email && password) {
         console.log("AuthProvider: Regular user login successful");
         const mockUser: User = {
@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(mockUser);
         toast.success("Welcome back!");
         console.log("AuthProvider: Navigating to dashboard");
-        navigate("/emotiq/dashboard");
+        navigate("/emotiq-mood-flow/dashboard");
       } else {
         console.log("AuthProvider: Invalid credentials provided");
         toast.error("Invalid credentials");
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("emotiq-user", JSON.stringify(mockUser));
       setUser(mockUser);
       toast.success("Account created successfully!");
-      navigate("/emotiq/dashboard");
+      navigate("/emotiq-mood-flow/dashboard");
     } catch (error) {
       toast.error("Failed to create account");
       console.error(error);
@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem("emotiq-user");
     setUser(null);
-    navigate("/emotiq/");
+    navigate("/emotiq-mood-flow/");
     toast.info("You've been logged out");
   };
 

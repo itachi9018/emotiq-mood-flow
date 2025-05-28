@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/common/Logo";
@@ -106,7 +105,7 @@ const SignUp = () => {
           <div className="mt-6 text-center">
             <p className="text-emotiq-text-dark/70">
               Already have an account?{" "}
-              <Link to="/emotiq/signin" className="text-emotiq-text-dark underline">
+              <Link to="/emotiq-mood-flow/signin" className="text-emotiq-text-dark underline">
                 Sign in
               </Link>
             </p>

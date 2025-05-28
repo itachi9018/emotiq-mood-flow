@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (!user) {
-    return <Navigate to="/emotiq/signin" />;
+    return <Navigate to="/emotiq-mood-flow/signin" />;
   }
 
   return <>{children}</>;

@@ -11,13 +11,13 @@ const Welcome = () => {
           
           <div className="flex flex-col gap-4 mt-12">
             <Link 
-              to="/emotiq/signin" 
+              to="/emotiq-mood-flow/signin" 
               className="emotiq-btn-primary w-full flex justify-center"
             >
               Sign In
             </Link>
             <Link 
-              to="/emotiq/signup" 
+              to="/emotiq-mood-flow/signup" 
               className="emotiq-btn-secondary w-full flex justify-center"
             >
               Sign Up

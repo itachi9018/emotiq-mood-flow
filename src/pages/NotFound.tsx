@@ -22,7 +22,7 @@ const NotFound = () => {
           We couldn't find the page you're looking for.
         </p>
         <Link 
-          to="/emotiq/dashboard" 
+          to="/emotiq-mood-flow/dashboard" 
           className="emotiq-btn-primary inline-block"
         >
           Back to Dashboard

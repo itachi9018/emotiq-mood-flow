@@ -30,13 +30,13 @@ const App = () => (
           <MoodProvider>
             <Routes>
               {/* Auth Routes */}
-              <Route path="/emotiq/" element={<Welcome />} />
-              <Route path="/emotiq/signin" element={<SignIn />} />
-              <Route path="/emotiq/signup" element={<SignUp />} />
+              <Route path="/emotiq-mood-flow/" element={<Welcome />} />
+              <Route path="/emotiq-mood-flow/signin" element={<SignIn />} />
+              <Route path="/emotiq-mood-flow/signup" element={<SignUp />} />
               
               {/* Protected Routes */}
               <Route 
-                path="/emotiq/dashboard" 
+                path="/emotiq-mood-flow/dashboard" 
                 element={
                   <ProtectedRoute>
                     <Dashboard />
@@ -44,7 +44,7 @@ const App = () => (
                 } 
               />
               <Route 
-                path="/emotiq/journal" 
+                path="/emotiq-mood-flow/journal" 
                 element={
                   <ProtectedRoute>
                     <Journal />
@@ -52,7 +52,7 @@ const App = () => (
                 } 
               />
               <Route 
-                path="/emotiq/history" 
+                path="/emotiq-mood-flow/history" 
                 element={
                   <ProtectedRoute>
                     <History />
@@ -60,7 +60,7 @@ const App = () => (
                 } 
               />
               <Route 
-                path="/emotiq/settings" 
+                path="/emotiq-mood-flow/settings" 
                 element={
                   <ProtectedRoute>
                     <Settings />
@@ -68,8 +68,8 @@ const App = () => (
                 } 
               />
               
-              {/* Redirect from base path to /emotiq/ */}
-              <Route path="/" element={<Navigate to="/emotiq/" replace />} />
+              {/* Redirect from base path to /emotiq-mood-flow/ */}
+              <Route path="/" element={<Navigate to="/emotiq-mood-flow/" replace />} />
               
               {/* 404 Route */}
               <Route path="*" element={<NotFound />} />

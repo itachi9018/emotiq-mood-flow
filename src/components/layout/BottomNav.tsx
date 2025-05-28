@@ -37,9 +37,9 @@ const BottomNav = () => {
   
   // Hide navigation on auth pages
   if (
-    currentPath === "/emotiq/" || 
-    currentPath === "/emotiq/signin" || 
-    currentPath === "/emotiq/signup"
+    currentPath === "/emotiq-mood-flow/" || 
+    currentPath === "/emotiq-mood-flow/signin" || 
+    currentPath === "/emotiq-mood-flow/signup"
   ) {
     return null;
   }
@@ -47,28 +47,28 @@ const BottomNav = () => {
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-emotiq-lavender/20 shadow-sm flex justify-around z-10">
       <NavItem
-        to="/emotiq/dashboard"
+        to="/emotiq-mood-flow/dashboard"
         icon={Home}
         label="Home"
-        isActive={currentPath === "/emotiq/dashboard"}
+        isActive={currentPath === "/emotiq-mood-flow/dashboard"}
       />
       <NavItem
-        to="/emotiq/journal"
+        to="/emotiq-mood-flow/journal"
         icon={PenSquare}
         label="Journal"
-        isActive={currentPath === "/emotiq/journal"}
+        isActive={currentPath === "/emotiq-mood-flow/journal"}
       />
       <NavItem
-        to="/emotiq/history"
+        to="/emotiq-mood-flow/history"
         icon={BarChart2}
         label="History"
-        isActive={currentPath === "/emotiq/history"}
+        isActive={currentPath === "/emotiq-mood-flow/history"}
       />
       <NavItem
-        to="/emotiq/settings"
+        to="/emotiq-mood-flow/settings"
         icon={Settings}
         label="Settings"
-        isActive={currentPath === "/emotiq/settings"}
+        isActive={currentPath === "/emotiq-mood-flow/settings"}
       />
     </nav>
   );

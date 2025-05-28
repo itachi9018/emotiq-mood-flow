@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -85,7 +84,7 @@ const Journal = () => {
         emotions: selectedEmotions,
         context: selectedContexts,
       });
-      navigate("/emotiq/dashboard");
+      navigate("/emotiq-mood-flow/dashboard");
     } catch (error) {
       console.error("Failed to save journal entry:", error);
     } finally {
