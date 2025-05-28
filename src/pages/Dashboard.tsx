@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useMood } from "@/contexts/MoodContext";
 import Layout from "@/components/layout/Layout";
+import ComingSoon from "@/components/common/ComingSoon";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { format, parseISO } from "date-fns";
 
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const { user } = useAuth();
   const { getRecentEntries, getWeeklyMoodData, addMoodEntry } = useMood();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const [showDailyPrompt, setShowDailyPrompt] = useState(true);
   const navigate = useNavigate();
   
   const recentEntries = getRecentEntries(3);
@@ -37,11 +39,15 @@ const Dashboard = () => {
   
   const handleJournalClick = () => {
     if (selectedMood) {
-      navigate("/emotiq/journal", { state: { initialMood: selectedMood } });
+      navigate("/emotiq-mood-flow/journal", { state: { initialMood: selectedMood } });
       setSelectedMood(null);
     } else {
-      navigate("/emotiq/journal");
+      navigate("/emotiq-mood-flow/journal");
     }
+  };
+
+  const dismissDailyPrompt = () => {
+    setShowDailyPrompt(false);
   };
 
   return (
@@ -52,6 +58,34 @@ const Dashboard = () => {
             Hi {user?.name.split(' ')[0]}
           </h1>
         </div>
+
+        {/* Daily Check-In Prompt */}
+        {showDailyPrompt && (
+          <div className="emotiq-card bg-emotiq-mint-light border-l-4 border-emotiq-mint">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-medium text-emotiq-text-dark mb-1">
+                  Daily Check-In 🌱
+                </h3>
+                <p className="text-sm text-emotiq-text-dark/80 mb-3">
+                  Take a moment to reflect on how you're feeling today
+                </p>
+                <button 
+                  onClick={handleJournalClick}
+                  className="emotiq-btn-secondary text-sm px-4 py-2"
+                >
+                  Start Journal
+                </button>
+              </div>
+              <button 
+                onClick={dismissDailyPrompt}
+                className="text-emotiq-text-dark/50 hover:text-emotiq-text-dark p-1"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
         
         <div className="emotiq-card bg-emotiq-lavender-light">
           <h2 className="text-lg font-medium mb-4">How are you feeling today?</h2>
@@ -78,11 +112,28 @@ const Dashboard = () => {
             Journal Your Feelings
           </button>
         </div>
+
+        {/* AI Insights Card - Coming Soon */}
+        <ComingSoon
+          title="AI Mood Coach"
+          description="Get personalized insights and gentle guidance based on your mood patterns"
+          icon={<span className="text-2xl">🤖</span>}
+          className="bg-gradient-to-br from-emotiq-lavender/10 to-emotiq-sky/10"
+        />
+
+        {/* Progress Tracker Widget - Coming Soon */}
+        <ComingSoon
+          title="Progress Tracker"
+          description="Track your mood streaks and celebrate your emotional wellness journey"
+          icon={<span className="text-2xl">📈</span>}
+          size="small"
+          className="bg-gradient-to-br from-emotiq-mint/10 to-emotiq-sky/10"
+        />
         
         <div className="emotiq-card">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-medium">Your Week</h2>
-            <Link to="/emotiq/history" className="text-sm text-emotiq-text-dark/70 hover:underline">
+            <Link to="/emotiq-mood-flow/history" className="text-sm text-emotiq-text-dark/70 hover:underline">
               View History
             </Link>
           </div>
@@ -117,7 +168,7 @@ const Dashboard = () => {
         <div className="emotiq-card">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-medium">Recent Entries</h2>
-            <Link to="/emotiq/history" className="text-sm text-emotiq-text-dark/70 hover:underline">
+            <Link to="/emotiq-mood-flow/history" className="text-sm text-emotiq-text-dark/70 hover:underline">
               View All
             </Link>
           </div>
@@ -164,6 +215,14 @@ const Dashboard = () => {
             </div>
           )}
         </div>
+
+        {/* Community Card - Coming Soon */}
+        <ComingSoon
+          title="Community Support"
+          description="Find support anonymously and connect with others on similar journeys"
+          icon={<span className="text-2xl">👥</span>}
+          className="bg-gradient-to-br from-emotiq-sky/10 to-emotiq-mint/10"
+        />
         
         <div className="emotiq-card bg-emotiq-mint-light">
           <h2 className="text-lg font-medium mb-2">Insight</h2>
