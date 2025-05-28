@@ -7,10 +7,8 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { Calendar } from "@/components/ui/calendar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AccessibleButton } from "@/components/ui/accessible-button";
 
 const moodEmojis = ["😢", "😔", "😐", "🙂", "😄"];
-const moodLabels = ["Very Sad", "Sad", "Neutral", "Happy", "Very Happy"];
 
 const History = () => {
   const { moodEntries } = useMood();
@@ -130,108 +128,106 @@ const History = () => {
   return (
     <Layout>
       <div className="space-y-6 pb-6">
-        <header>
-          <h1 className="text-2xl font-semibold">Mood History</h1>
-          <p className="text-sm text-emotiq-text-dark/70 mt-1">Track your emotional journey over time</p>
-        </header>
+        <h1 className="text-2xl font-semibold">History</h1>
         
-        {/* Emotion Filters */}
-        <section aria-labelledby="emotion-filters-heading">
-          <h2 id="emotion-filters-heading" className="sr-only">Filter by emotions</h2>
-          <div className="flex gap-2 overflow-x-auto pb-2" role="group" aria-label="Emotion filters">
-            <AccessibleButton
-              variant={filter === "all" ? "filter-active" : "filter-inactive"}
-              onClick={() => setFilter("all")}
-              ariaLabel="Show all emotions"
+        {/* Filters */}
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          <button
+            className={`whitespace-nowrap px-3 py-1 rounded-full text-sm ${
+              filter === "all" 
+                ? "bg-emotiq-lavender text-emotiq-text-dark" 
+                : "bg-gray-100 text-emotiq-text-dark/70"
+            }`}
+            onClick={() => setFilter("all")}
+          >
+            All Emotions
+          </button>
+          
+          {allEmotions.map(emotion => (
+            <button
+              key={emotion}
+              className={`whitespace-nowrap px-3 py-1 rounded-full text-sm ${
+                filter === emotion
+                  ? "bg-emotiq-lavender text-emotiq-text-dark"
+                  : "bg-gray-100 text-emotiq-text-dark/70"
+              }`}
+              onClick={() => setFilter(emotion)}
             >
-              All Emotions
-            </AccessibleButton>
-            
-            {allEmotions.map(emotion => (
-              <AccessibleButton
-                key={emotion}
-                variant={filter === emotion ? "filter-active" : "filter-inactive"}
-                onClick={() => setFilter(emotion)}
-                ariaLabel={`Filter by ${emotion} emotion`}
-              >
-                {emotion}
-              </AccessibleButton>
-            ))}
-          </div>
-        </section>
+              {emotion}
+            </button>
+          ))}
+        </div>
         
-        {/* Date Range Filters */}
-        <section aria-labelledby="date-filters-heading">
-          <h2 id="date-filters-heading" className="sr-only">Filter by date range</h2>
-          <div className="flex gap-2 mb-4" role="group" aria-label="Date range filters">
-            <AccessibleButton
-              variant={dateRange === "all" ? "filter-active" : "filter-inactive"}
-              onClick={() => setDateRange("all")}
-              ariaLabel="Show all time periods"
-            >
-              All Time
-            </AccessibleButton>
-            <AccessibleButton
-              variant={dateRange === "week" ? "filter-active" : "filter-inactive"}
-              onClick={() => setDateRange("week")}
-              ariaLabel="Show last week only"
-            >
-              Last Week
-            </AccessibleButton>
-            <AccessibleButton
-              variant={dateRange === "month" ? "filter-active" : "filter-inactive"}
-              onClick={() => setDateRange("month")}
-              ariaLabel="Show last month only"
-            >
-              Last Month
-            </AccessibleButton>
-          </div>
-        </section>
+        <div className="flex gap-2 mb-4">
+          <button
+            className={`px-3 py-1 rounded-full text-sm ${
+              dateRange === "all"
+                ? "bg-emotiq-sky text-emotiq-text-dark"
+                : "bg-gray-100 text-emotiq-text-dark/70"
+            }`}
+            onClick={() => setDateRange("all")}
+          >
+            All Time
+          </button>
+          <button
+            className={`px-3 py-1 rounded-full text-sm ${
+              dateRange === "week"
+                ? "bg-emotiq-sky text-emotiq-text-dark"
+                : "bg-gray-100 text-emotiq-text-dark/70"
+            }`}
+            onClick={() => setDateRange("week")}
+          >
+            Last Week
+          </button>
+          <button
+            className={`px-3 py-1 rounded-full text-sm ${
+              dateRange === "month"
+                ? "bg-emotiq-sky text-emotiq-text-dark"
+                : "bg-gray-100 text-emotiq-text-dark/70"
+            }`}
+            onClick={() => setDateRange("month")}
+          >
+            Last Month
+          </button>
+        </div>
 
         {/* View Mode Tabs */}
         <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as any)} className="w-full">
-          <TabsList className="grid w-full grid-cols-3" aria-label="View mode selection">
-            <TabsTrigger value="chart" aria-label="View mood trend chart">Trend Chart</TabsTrigger>
-            <TabsTrigger value="calendar" aria-label="View calendar heatmap">Calendar View</TabsTrigger>
-            <TabsTrigger value="list" aria-label="View entry list">Entry List</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="chart">Trend Chart</TabsTrigger>
+            <TabsTrigger value="calendar">Calendar View</TabsTrigger>
+            <TabsTrigger value="list">Entry List</TabsTrigger>
           </TabsList>
 
           {/* Trend Chart View */}
           <TabsContent value="chart" className="space-y-4">
             <div className="emotiq-card">
-              <h2 className="text-lg font-medium mb-4">Mood Trend Over Time</h2>
+              <h2 className="text-lg font-medium mb-4">Mood Trend</h2>
               {trendData.length > 0 ? (
-                <div role="img" aria-label="Mood trend chart showing daily mood scores">
-                  <ChartContainer config={chartConfig} className="h-64">
-                    <LineChart data={trendData}>
-                      <XAxis 
-                        dataKey="displayDate" 
-                        tick={{ fontSize: 12 }}
-                        aria-label="Date"
-                      />
-                      <YAxis 
-                        domain={[1, 5]} 
-                        tick={{ fontSize: 12 }}
-                        tickFormatter={(value) => moodEmojis[value - 1]}
-                        aria-label="Mood level"
-                      />
-                      <ChartTooltip 
-                        content={<ChartTooltipContent />}
-                        formatter={(value) => [`${moodEmojis[value - 1]} ${moodLabels[value - 1]}`, "Mood"]}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="mood" 
-                        stroke="var(--color-mood)" 
-                        strokeWidth={3}
-                        dot={{ fill: "var(--color-mood)", strokeWidth: 2, r: 4 }}
-                      />
-                    </LineChart>
-                  </ChartContainer>
-                </div>
+                <ChartContainer config={chartConfig} className="h-64">
+                  <LineChart data={trendData}>
+                    <XAxis 
+                      dataKey="displayDate" 
+                      tick={{ fontSize: 12 }}
+                    />
+                    <YAxis 
+                      domain={[1, 5]} 
+                      tick={{ fontSize: 12 }}
+                      tickFormatter={(value) => moodEmojis[value - 1]}
+                    />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Line 
+                      type="monotone" 
+                      dataKey="mood" 
+                      stroke="var(--color-mood)" 
+                      strokeWidth={3}
+                      dot={{ fill: "var(--color-mood)", strokeWidth: 2, r: 4 }}
+                    />
+                  </LineChart>
+                </ChartContainer>
               ) : (
                 <div className="text-center py-8 text-emotiq-text-dark/70">
-                  <p>No mood data available for the selected period</p>
+                  No mood data available for the selected period
                 </div>
               )}
             </div>
@@ -241,33 +237,29 @@ const History = () => {
           <TabsContent value="calendar" className="space-y-4">
             <div className="emotiq-card">
               <h2 className="text-lg font-medium mb-4">Monthly Mood Calendar</h2>
-              <div className="grid grid-cols-7 gap-2 mb-4" role="grid" aria-label="Mood calendar">
+              <div className="grid grid-cols-7 gap-2 mb-4">
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                  <div key={day} className="text-xs text-center font-medium text-emotiq-text-dark/70 p-2" role="columnheader">
+                  <div key={day} className="text-xs text-center font-medium text-emotiq-text-dark/70 p-2">
                     {day}
                   </div>
                 ))}
                 {calendarData.map((day, index) => (
                   <button
                     key={index}
-                    className={`emotiq-calendar-day ${getMoodColor(day.mood)} ${
+                    className={`aspect-square rounded-lg border-2 transition-all ${
+                      getMoodColor(day.mood)
+                    } ${
                       selectedDate && isSameDay(day.date, selectedDate)
-                        ? "emotiq-calendar-day-selected"
-                        : "border-transparent"
+                        ? "border-emotiq-lavender scale-110"
+                        : "border-transparent hover:border-emotiq-lavender/50"
                     }`}
                     onClick={() => setSelectedDate(day.date)}
-                    aria-label={
-                      day.mood > 0 
-                        ? `${format(day.date, 'MMMM d')}, mood: ${moodLabels[day.mood - 1]}`
-                        : `${format(day.date, 'MMMM d')}, no mood entry`
-                    }
-                    role="gridcell"
                   >
                     <div className="text-xs font-medium">
                       {format(day.date, 'd')}
                     </div>
                     {day.mood > 0 && (
-                      <div className="text-xs" aria-hidden="true">
+                      <div className="text-xs">
                         {moodEmojis[day.mood - 1]}
                       </div>
                     )}
@@ -276,16 +268,12 @@ const History = () => {
               </div>
               
               {/* Legend */}
-              <div className="flex items-center justify-center gap-2 text-xs" role="group" aria-label="Mood intensity legend">
-                <span className="text-emotiq-text-dark/70">Less intense</span>
+              <div className="flex items-center justify-center gap-2 text-xs">
+                <span className="text-emotiq-text-dark/70">Less</span>
                 {[1, 2, 3, 4, 5].map(mood => (
-                  <div 
-                    key={mood} 
-                    className={`w-3 h-3 rounded ${getMoodColor(mood)}`}
-                    aria-label={moodLabels[mood - 1]}
-                  />
+                  <div key={mood} className={`w-3 h-3 rounded ${getMoodColor(mood)}`} />
                 ))}
-                <span className="text-emotiq-text-dark/70">More intense</span>
+                <span className="text-emotiq-text-dark/70">More</span>
               </div>
             </div>
 
@@ -297,14 +285,12 @@ const History = () => {
                 </h3>
                 <div className="space-y-3">
                   {selectedDateEntries.map(entry => (
-                    <article key={entry.id} className="flex items-start p-3 bg-emotiq-lavender-light rounded-lg">
-                      <div className="text-2xl mr-3" aria-hidden="true">{moodEmojis[entry.mood - 1]}</div>
+                    <div key={entry.id} className="flex items-start p-3 bg-emotiq-lavender-light rounded-lg">
+                      <div className="text-2xl mr-3">{moodEmojis[entry.mood - 1]}</div>
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <p className="font-medium">
-                            <time dateTime={entry.date}>
-                              {format(new Date(entry.date), "h:mm a")}
-                            </time>
+                            {format(new Date(entry.date), "h:mm a")}
                           </p>
                           <span className={`text-xs px-2 py-1 rounded-full ${
                             entry.sentiment === "Positive" 
@@ -320,7 +306,7 @@ const History = () => {
                           {entry.journalText}
                         </p>
                         {entry.emotions.length > 0 && (
-                          <div className="flex gap-1 mt-2 flex-wrap" role="list" aria-label="Emotions">
+                          <div className="flex gap-1 mt-2 flex-wrap">
                             {entry.emotions.map(emotion => (
                               <span key={emotion} className="text-xs bg-emotiq-lavender/40 px-2 py-0.5 rounded-full">
                                 {emotion}
@@ -329,7 +315,7 @@ const History = () => {
                           </div>
                         )}
                       </div>
-                    </article>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -340,70 +326,64 @@ const History = () => {
           <TabsContent value="list" className="space-y-4">
             <div className="space-y-4">
               {filteredEntries.length > 0 ? (
-                <div role="feed" aria-label="Mood entries">
-                  {filteredEntries.map(entry => (
-                    <article key={entry.id} className="emotiq-card">
-                      <div className="flex items-start">
-                        <div className="text-3xl mr-3" aria-hidden="true">{moodEmojis[entry.mood - 1]}</div>
-                        <div className="flex-1">
-                          <div className="flex justify-between items-start">
-                            <p className="font-medium">
-                              <time dateTime={entry.date}>
-                                {format(new Date(entry.date), "MMM d, yyyy • h:mm a")}
-                              </time>
-                            </p>
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              entry.sentiment === "Positive" 
-                                ? "bg-emotiq-mint/30 text-green-700" 
-                                : entry.sentiment === "Negative"
-                                ? "bg-red-100 text-red-700"
-                                : "bg-gray-100 text-gray-700"
-                            }`}>
-                              {entry.sentiment}
-                            </span>
-                          </div>
-                          <p className="text-emotiq-text-dark/90 my-3">
-                            {entry.journalText}
+                filteredEntries.map(entry => (
+                  <div key={entry.id} className="emotiq-card">
+                    <div className="flex items-start">
+                      <div className="text-3xl mr-3">{moodEmojis[entry.mood - 1]}</div>
+                      <div className="flex-1">
+                        <div className="flex justify-between items-start">
+                          <p className="font-medium">
+                            {format(new Date(entry.date), "MMM d, yyyy • h:mm a")}
                           </p>
+                          <span className={`text-xs px-2 py-1 rounded-full ${
+                            entry.sentiment === "Positive" 
+                              ? "bg-emotiq-mint/30 text-green-700" 
+                              : entry.sentiment === "Negative"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-gray-100 text-gray-700"
+                          }`}>
+                            {entry.sentiment}
+                          </span>
+                        </div>
+                        <p className="text-emotiq-text-dark/90 my-3">
+                          {entry.journalText}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {entry.emotions.map(emotion => (
+                            <span
+                              key={emotion}
+                              className="bg-emotiq-lavender/30 px-2 py-0.5 rounded-full text-xs"
+                            >
+                              {emotion}
+                            </span>
+                          ))}
                           
-                          <div className="flex flex-wrap gap-2">
-                            {entry.emotions.map(emotion => (
-                              <span
-                                key={emotion}
-                                className="bg-emotiq-lavender/30 px-2 py-0.5 rounded-full text-xs"
-                              >
-                                {emotion}
-                              </span>
-                            ))}
-                            
-                            {entry.context.map(context => (
-                              <span
-                                key={context}
-                                className="bg-emotiq-sky/30 px-2 py-0.5 rounded-full text-xs"
-                              >
-                                {context}
-                              </span>
-                            ))}
-                          </div>
+                          {entry.context.map(context => (
+                            <span
+                              key={context}
+                              className="bg-emotiq-sky/30 px-2 py-0.5 rounded-full text-xs"
+                            >
+                              {context}
+                            </span>
+                          ))}
                         </div>
                       </div>
-                    </article>
-                  ))}
-                </div>
+                    </div>
+                  </div>
+                ))
               ) : (
                 <div className="emotiq-card text-center py-8 text-emotiq-text-dark/70">
-                  <p>No entries match your current filters</p>
-                  <AccessibleButton
-                    variant="accent"
+                  <p>No entries match your filters</p>
+                  <button
                     className="mt-2 text-sm underline"
                     onClick={() => {
                       setFilter("all");
                       setDateRange("all");
                     }}
-                    ariaLabel="Clear all filters and show all entries"
                   >
                     Clear filters
-                  </AccessibleButton>
+                  </button>
                 </div>
               )}
             </div>
